@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
     public function viewSinglePost(Post $post) {
+        $post['body'] = strip_tags(Str::markdown($post->body), '<p><ul><ol><li><strong><em>');
         return view('single-post', ['post' => $post]);
     }
 
