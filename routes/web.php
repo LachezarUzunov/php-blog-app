@@ -3,6 +3,7 @@
 use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use GuzzleHttp\Middleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,11 @@ use App\Http\Controllers\UserController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/admins-only', function() {
+   
+    return 'Only admins can see this page';
+})->middleware('can:visitAdminPages');
 
 Route::get('/', [UserController::class, 'showCorrectHomepage'])->name('login');
 
