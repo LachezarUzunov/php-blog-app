@@ -9,7 +9,12 @@
         </a>
             
         @endforeach
+    </div>
 
+        <div class="mt-4">
+          {{$posts->links()}}
+        </div>
+       
         @else
 
         <div class="text-center">
@@ -18,5 +23,4 @@
         </div>
         @endunless
        
-      </div>
 </x-layout>
