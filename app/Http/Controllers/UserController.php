@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Follow;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -87,7 +89,10 @@ class UserController extends Controller
         if (auth()->check()) {
             return view('homepage-feed', ['posts' => auth()->user()->feedPosts()->latest()->paginate(5)]);
         } else {
-            return view('homepage');
+            $postCount = Cache::remember('postCount', 20, function() {
+                return Post::count();
+            });
+            return view('homepage', ['postCount' => $postCount]);
         }
     }
 
